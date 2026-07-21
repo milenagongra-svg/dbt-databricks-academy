@@ -1,0 +1,55 @@
+version: 2
+
+# ==========================================
+# 1. FONTES (Dados brutos do banco)
+# ==========================================
+sources:
+  - name: adwork
+    database: fea_academy
+    schema: adventure_works
+    tables:
+      - name: sales_salesorderheader
+        description: Tabela bruta com informações de cabeçalho do pedido.
+        columns:
+          - name: salesorderid
+            description: Chave primária da tabela de pedidos.
+            tests:
+              - unique
+              - not_null
+
+          - name: customerid
+            description: Chave estrangeira para a tabela de clientes.
+            tests:
+              - not_null
+
+          - name: shiptoaddressid
+            description: Chave estrangeira para o endereço de entrega.
+            tests:
+              - not_null
+
+      - name: sales_salesorderdetail
+        description: Tabela bruta com informações de itens/detalhes dos pedidos.
+        columns:
+          - name: salesorderid
+            description: Chave estrangeira para a tabela de pedidos.
+            tests:
+              - not_null
+
+          - name: productid
+            description: Chave estrangeira para a tabela de produtos.
+            tests:
+              - not_null
+
+
+# ==========================================
+# 2. MODELOS (Transformações criadas no dbt)
+# ==========================================
+models:
+  - name: stg_adwork__orderdetail
+    description: Staging tratada de detalhes dos pedidos.
+    columns:
+      - name: order_item_sk
+        description: Surrogate key gerada a partir de salesorderid e productid.
+        tests:
+          - unique
+          - not_null
