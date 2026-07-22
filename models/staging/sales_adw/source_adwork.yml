@@ -40,6 +40,31 @@ sources:
             tests:
               - not_null
 
+      - name: sales_salesorderheadersalesreason
+        description: Tabela bruta com o relacionamento entre pedidos e motivos de venda.
+        columns:
+          - name: salesorderid
+            description: ID do pedido.
+            tests:
+              - not_null
+          
+          - name: salesreasonid
+            description: ID do motivo da venda.
+            tests:
+              - not_null
+          # REMOVIDO: order_reason_sk (SKs devem ser testadas nos 'models', não nas 'sources')
+
+      - name: sales_salesreason
+        description: Tabela bruta com os nomes e categorias dos motivos de venda.
+
+      - name: sales_creditcard
+        description: Tabela bruta com informações dos cartões de crédito.
+        columns:
+          - name: creditcardid
+            description: Chave primária dos cartões.
+            tests:
+              - not_null
+              - unique
 
 # ==========================================
 # 2. MODELOS (Transformações criadas no dbt)
@@ -49,7 +74,7 @@ models:
     description: Staging tratada de detalhes dos pedidos.
     columns:
       - name: order_item_sk
-        description: Surrogate key gerada a partir de salesorderid e productid.
+        description: Surrogate key gerada a partir de salesorderid e salesorderdetailid (ou productid).
         tests:
           - unique
           - not_null
