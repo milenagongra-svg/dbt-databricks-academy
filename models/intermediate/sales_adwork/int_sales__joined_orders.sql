@@ -7,7 +7,7 @@ with
 
     , orderdetail as (
         select *
-        from {{ ref('stg_adwork__orderdetail') }}
+        from {{ ref('stg_adwork__order_details') }}
     )
 
     -- transformation

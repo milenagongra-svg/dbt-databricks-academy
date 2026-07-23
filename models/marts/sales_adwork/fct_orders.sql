@@ -2,7 +2,7 @@ with
     -- import models
     int_sales as (
         select *
-        from {{ ref('int_sales__joinorders') }}
+        from {{ ref('int_sales__joined_orders') }}
     )
     , metrics as (
         select
