@@ -47,7 +47,7 @@ sources:
             description: ID do pedido.
             tests:
               - not_null
-          
+
           - name: salesreasonid
             description: ID do motivo da venda.
             tests:
@@ -57,31 +57,32 @@ sources:
         description: Tabela bruta com os nomes e categorias dos motivos de venda.
 
       - name: sales_customer
-        description: Tabela bruta com os dados de customers e stores.
+        description: Tabela bruta com os dados de clientes.
         columns:
           - name: customerid
-            description: coluna com informação de clientes
+            description: Chave primária da tabela de clientes.
             tests:
               - not_null
               - unique
 
       - name: person_person
-        description: Tabela bruta com os dados de customers e stores.
+        description: Tabela bruta com os dados de pessoas/contatos.
         columns:
           - name: businessentityid
-            description: coluna com informação de clientes
+            description: Chave primária da tabela de pessoas.
             tests:
               - not_null
               - unique
+
       - name: sales_store
-        description: Tabela bruta com os dados de customers e stores.
+        description: Tabela bruta com os dados de lojas (pessoas jurídicas).
         columns:
           - name: businessentityid
-            description: coluna com informação de clientes
+            description: Chave primária da tabela de lojas.
             tests:
               - not_null
               - unique
-              
+
       - name: sales_creditcard
         description: Tabela bruta com informações dos cartões de crédito.
         columns:
@@ -91,15 +92,56 @@ sources:
               - not_null
               - unique
 
+      - name: person_address
+        description: Tabela bruta para os dados de endereços.
+        columns:
+          - name: addressid
+            description: Chave primária dos endereços.
+            tests:
+              - not_null
+              - unique
+
+          - name: stateprovinceid
+            description: Chave estrangeira para o estado/província.
+            tests:
+              - not_null
+
+      - name: person_stateprovince
+        description: Tabela bruta para os dados de estados e províncias.
+        columns:
+          - name: stateprovinceid
+            description: Chave primária do estado/província.
+            tests:
+              - not_null
+              - unique
+
+          - name: countryregioncode
+            description: Código do país/região.
+            tests:
+              - not_null
+
+          - name: stateprovincecode
+            description: Código do estado/província.
+            tests:
+              - not_null
+      - name: person_countryregion
+        description: Tabela bruta para os dados de estados e províncias.
+        columns:
+          - name: countryregioncode
+            description: Chave primária do estado/província.
+            tests:
+              - not_null
+              - unique
+
 # ==========================================
 # 2. MODELOS (Transformações criadas no dbt)
 # ==========================================
 models:
-  - name: stg_adwork__orderdetail
-    description: Staging tratada de detalhes dos pedidos.
+  - name: stg_adwork__order_details
+    description: Staging tratada com os detalhes dos itens dos pedidos.
     columns:
       - name: order_item_sk
-        description: Surrogate key gerada a partir de salesorderid e salesorderdetailid (ou productid).
+        description: Surrogate key gerada a partir de salesorderid e salesorderdetailid.
         tests:
           - unique
           - not_null
