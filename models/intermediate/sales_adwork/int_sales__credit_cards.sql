@@ -1,7 +1,7 @@
 with
     staging as (
         select *
-        from {{ ref('stg_adwork__creditcard') }}
+        from {{ ref('stg_adwork__credit_cards') }}
     )
 
     , final as (

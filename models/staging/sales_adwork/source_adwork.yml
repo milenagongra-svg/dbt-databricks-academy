@@ -52,11 +52,36 @@ sources:
             description: ID do motivo da venda.
             tests:
               - not_null
-          # REMOVIDO: order_reason_sk (SKs devem ser testadas nos 'models', não nas 'sources')
 
       - name: sales_salesreason
         description: Tabela bruta com os nomes e categorias dos motivos de venda.
 
+      - name: sales_customer
+        description: Tabela bruta com os dados de customers e stores.
+        columns:
+          - name: customerid
+            description: coluna com informação de clientes
+            tests:
+              - not_null
+              - unique
+
+      - name: person_person
+        description: Tabela bruta com os dados de customers e stores.
+        columns:
+          - name: businessentityid
+            description: coluna com informação de clientes
+            tests:
+              - not_null
+              - unique
+      - name: sales_store
+        description: Tabela bruta com os dados de customers e stores.
+        columns:
+          - name: businessentityid
+            description: coluna com informação de clientes
+            tests:
+              - not_null
+              - unique
+              
       - name: sales_creditcard
         description: Tabela bruta com informações dos cartões de crédito.
         columns:

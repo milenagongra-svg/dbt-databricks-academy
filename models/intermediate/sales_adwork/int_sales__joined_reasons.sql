@@ -2,12 +2,12 @@ with
     -- import ctes
     orders_reason as (
         select *
-        from {{ ref('stg_adwork__orderheaderreason') }}
+        from {{ ref('stg_adwork__order_reasons') }}
     )
 
     , sales_reason as (
         select *
-        from {{ ref('stg_adwork__salesreason') }}
+        from {{ ref('stg_adwork__sales_reasons') }}
     )
 
     -- transformation

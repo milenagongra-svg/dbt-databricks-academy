@@ -1,7 +1,7 @@
 with
     credit_card as (
         select *
-        from {{ ref('int_sales__creditcard') }}
+        from {{ ref('int_sales__credit_cards') }}
     )
 
     , final as (
