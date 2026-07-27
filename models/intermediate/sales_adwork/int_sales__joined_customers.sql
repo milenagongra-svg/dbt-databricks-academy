@@ -16,41 +16,47 @@ with
 
     , joined_customers as (
         select
-            customers.customer_id_pk
-            , customers.person_id_fk
-            , customers.store_id_fk
-            , customers.territory_id_fk
-            
-            -- Se tiver nome de pessoa usa, senão usa o nome da loja
-            , coalesce(persons.full_name, stores.store_name, 'Desconhecido') as customer_name
-            
-            -- Define o tipo de cliente com base na presença dos IDs
-            , case 
-                when customers.person_id_fk is not null and customers.store_id_fk is null 
-                    then 'Pessoa Física'
-                when customers.store_id_fk is not null and customers.person_id_fk is null 
-                    then 'Pessoa Jurídica'
-                when customers.store_id_fk is not null and customers.person_id_fk is not null 
-                    then 'Pessoa Jurídica (com Contato)'
-                else 'Não Informado'
+            customers.customer_pk as customer_sk
+            , customers.person_fk
+            , customers.store_fk
+            , customers.territory_fk
+            , coalesce(persons.full_name, stores.store_name, 'Not Informed') as customer_name
+            , case
+                when customers.person_fk is not null
+                    and customers.store_fk is null
+                    then 'Individual'
+                when customers.store_fk is not null
+                    and customers.person_fk is null
+                    then 'Corporate Store'
+                when customers.store_fk is not null
+                    and customers.person_fk is not null
+                    then 'Corporate Store (with Contact)'
+                else 'Not Informed'
             end as customer_type
         from customers
         left join persons
-            on customers.person_id_fk = persons.person_id_pk
+            on customers.person_fk = persons.person_pk
         left join stores
-            on customers.store_id_fk = stores.store_id_pk
+            on customers.store_fk = stores.store_pk
     )
 
-    , final as (
+    , unmapped as (
         select
-            customer_id_pk
-            , person_id_fk
-            , store_id_fk
-            , territory_id_fk
-            , customer_name
-            , customer_type
+            -1 as customer_sk
+            , -1 as person_fk
+            , -1 as store_fk
+            , -1 as territory_fk
+            , 'Not Informed Customer' as customer_name
+            , 'Not Applicable' as customer_type
+    )
+
+    , combined as (
+        select *
         from joined_customers
+        union all
+        select *
+        from unmapped
     )
 
 select *
-from final
+from combined

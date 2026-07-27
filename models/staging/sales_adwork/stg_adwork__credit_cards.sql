@@ -6,8 +6,8 @@ with
 
     , renamed as (
         select
-        cast(creditcardid as int) as credit_card_id_pk
-        , cast(cardtype as string) as card_type
+            cast(creditcardid as bigint) as credit_card_pk
+            , cast(cardtype as string) as card_type
         from source_sales_creditcard
     )
 

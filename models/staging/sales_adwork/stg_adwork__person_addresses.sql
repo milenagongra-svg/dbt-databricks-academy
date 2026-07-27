@@ -6,10 +6,10 @@ with
 
     , renamed as (
         select
-        cast(addressid as int) as address_id_pk
-        , cast(addressline1 as string) as address_line
-        , cast(city as string) as city_name
-        , cast(stateprovinceid as int) as state_province_id_fk
+            cast(addressid as int) as address_pk
+            , cast(addressline1 as string) as address_line
+            , cast(city as string) as city_name
+            , cast(stateprovinceid as int) as state_province_fk
         from source_person_address
     )
 

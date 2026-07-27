@@ -1,21 +1,15 @@
 with
-    credit_card as (
+    int_credit_cards as (
         select *
         from {{ ref('int_sales__credit_cards') }}
     )
 
-    , final as (
+    , dimensions as (
         select
-            credit_card_id_pk
+            credit_card_sk
             , card_type
-        from int_sales__creditcard
-
-        union all
-        -- Linha fictícia para representar vendas sem cartão de crédito
-        select
-            -1 as credit_card_id_pk
-            , 'Não Utilizado / Sem Cartão' as card_type
+        from int_credit_cards
     )
 
 select *
-from final
+from dimensions
