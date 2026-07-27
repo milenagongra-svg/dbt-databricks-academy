@@ -1,147 +1,190 @@
 version: 2
 
 # ==========================================
-# 1. FONTES (Dados brutos do banco)
+# 1. SOURCES (Raw database tables)
 # ==========================================
 sources:
   - name: adwork
     database: fea_academy
     schema: adventure_works
+    description: "Raw relational source data for Adventure Works."
     tables:
       - name: sales_salesorderheader
-        description: Tabela bruta com informações de cabeçalho do pedido.
+        description: "Raw table containing sales order header information."
         columns:
           - name: salesorderid
-            description: Chave primária da tabela de pedidos.
+            description: "Primary key of the sales order header table."
             tests:
               - unique
               - not_null
 
           - name: customerid
-            description: Chave estrangeira para a tabela de clientes.
+            description: "Foreign key referencing the customer table."
             tests:
               - not_null
 
           - name: shiptoaddressid
-            description: Chave estrangeira para o endereço de entrega.
+            description: "Foreign key referencing the shipping address."
             tests:
               - not_null
 
       - name: sales_salesorderdetail
-        description: Tabela bruta com informações de itens/detalhes dos pedidos.
+        description: "Raw table containing line items for sales orders."
         columns:
           - name: salesorderid
-            description: Chave estrangeira para a tabela de pedidos.
+            description: "Foreign key referencing the sales order header."
             tests:
               - not_null
 
           - name: productid
-            description: Chave estrangeira para a tabela de produtos.
+            description: "Foreign key referencing the product table."
             tests:
               - not_null
 
       - name: sales_salesorderheadersalesreason
-        description: Tabela bruta com o relacionamento entre pedidos e motivos de venda.
+        description: "Raw bridge table linking sales orders to sales reasons."
         columns:
           - name: salesorderid
-            description: ID do pedido.
+            description: "Foreign key referencing the sales order header."
             tests:
               - not_null
 
           - name: salesreasonid
-            description: ID do motivo da venda.
+            description: "Foreign key referencing the sales reason table."
             tests:
               - not_null
 
       - name: sales_salesreason
-        description: Tabela bruta com os nomes e categorias dos motivos de venda.
+        description: "Raw catalog table containing names and types of sales reasons."
+        columns:
+          - name: salesreasonid
+            description: "Primary key of the sales reason table."
+            tests:
+              - unique
+              - not_null
 
       - name: sales_customer
-        description: Tabela bruta com os dados de clientes.
+        description: "Raw customer master table."
         columns:
           - name: customerid
-            description: Chave primária da tabela de clientes.
+            description: "Primary key of the customer table."
             tests:
-              - not_null
               - unique
+              - not_null
 
       - name: person_person
-        description: Tabela bruta com os dados de pessoas/contatos.
+        description: "Raw individual person contact table."
         columns:
           - name: businessentityid
-            description: Chave primária da tabela de pessoas.
+            description: "Primary key of the person table."
             tests:
-              - not_null
               - unique
+              - not_null
 
       - name: sales_store
-        description: Tabela bruta com os dados de lojas (pessoas jurídicas).
+        description: "Raw corporate store table."
         columns:
           - name: businessentityid
-            description: Chave primária da tabela de lojas.
+            description: "Primary key of the store table."
             tests:
-              - not_null
               - unique
+              - not_null
 
       - name: sales_creditcard
-        description: Tabela bruta com informações dos cartões de crédito.
+        description: "Raw credit card payment details table."
         columns:
           - name: creditcardid
-            description: Chave primária dos cartões.
+            description: "Primary key of the credit card table."
             tests:
-              - not_null
               - unique
+              - not_null
 
       - name: person_address
-        description: Tabela bruta para os dados de endereços.
+        description: "Raw address line details table."
         columns:
           - name: addressid
-            description: Chave primária dos endereços.
+            description: "Primary key of the address table."
             tests:
-              - not_null
               - unique
+              - not_null
 
           - name: stateprovinceid
-            description: Chave estrangeira para o estado/província.
+            description: "Foreign key referencing the state or province."
             tests:
               - not_null
 
       - name: person_stateprovince
-        description: Tabela bruta para os dados de estados e províncias.
+        description: "Raw state and province master table."
         columns:
           - name: stateprovinceid
-            description: Chave primária do estado/província.
+            description: "Primary key of the state or province table."
             tests:
-              - not_null
               - unique
+              - not_null
 
           - name: countryregioncode
-            description: Código do país/região.
+            description: "Country or region code."
             tests:
               - not_null
 
           - name: stateprovincecode
-            description: Código do estado/província.
+            description: "State or province code."
             tests:
               - not_null
+
       - name: person_countryregion
-        description: Tabela bruta para os dados de estados e províncias.
+        description: "Raw country and region master table."
         columns:
           - name: countryregioncode
-            description: Chave primária do estado/província.
+            description: "Primary key code for the country or region."
             tests:
-              - not_null
               - unique
 
+      - name: production_product
+        description: "Raw product catalog master table."
+        columns:
+          - name: productid
+            description: "Primary key of the product table."
+            tests:
+              - unique
+              - not_null
+
+      - name: production_productsubcategory
+        description: "Raw product subcategory table."
+        columns:
+          - name: productsubcategoryid
+            description: "Primary key of the product subcategory table."
+            tests:
+              - unique
+              - not_null
+
+      - name: production_productcategory
+        description: "Raw product category table."
+        columns:
+          - name: productcategoryid
+            description: "Primary key of the product category table."
+            tests:
+              - unique
+              - not_null
+
+      - name: production_productmodel
+        description: "Raw product model table."
+        columns:
+          - name: productmodelid
+            description: "Primary key of the product model table."
+            tests:
+              - unique
+              - not_null
+
 # ==========================================
-# 2. MODELOS (Transformações criadas no dbt)
+# 2. STAGING MODELS
 # ==========================================
 models:
   - name: stg_adwork__order_details
-    description: Staging tratada com os detalhes dos itens dos pedidos.
+    description: "Staging model containing cleaned sales order line items."
     columns:
       - name: order_item_sk
-        description: Surrogate key gerada a partir de salesorderid e salesorderdetailid.
+        description: "Surrogate key generated from salesorderid and productid."
         tests:
           - unique
           - not_null

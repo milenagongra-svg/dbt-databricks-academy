@@ -6,8 +6,8 @@ with
 
     , renamed as (
         select
-        cast(businessentityid as int) as store_id_pk
-        , cast(name as string) as store_name
+            cast(businessentityid as int) as store_pk
+            , cast(name as string) as store_name
         from source_sales_store
     )
 
