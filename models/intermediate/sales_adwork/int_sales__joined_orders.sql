@@ -23,7 +23,15 @@ with
             , coalesce(orders.address_fk, -1) as address_fk
             , orderdetail.product_fk
             , orders.order_date
-            , orders.order_status
+            , case orders.order_status
+                when 1 then 'In Process'
+                when 2 then 'Approved'
+                when 3 then 'Backordered'
+                when 4 then 'Rejected'
+                when 5 then 'Shipped'
+                when 6 then 'Cancelled'
+                else 'Unknown'
+            end as order_status
             , coalesce(order_reasons.sales_reason_name, 'Not Informed') as sales_reason_name
             , orderdetail.quantity
             , orderdetail.unit_price
