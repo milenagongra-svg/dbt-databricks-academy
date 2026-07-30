@@ -5,9 +5,10 @@ with
     )
 
     , dimensions as (
-        select
-            order_fk
-            , sales_reason_name
+        select distinct
+            reason_fk as reason_sk
+            , reason_name
+            , reason_type
         from int_reasons
     )
 

@@ -2,7 +2,7 @@ version: 2
 
 models:
   # ==========================================
-  # FACT TABLE
+  # FACT TABLES
   # ==========================================
   - name: fct_orders
     description: "Consolidated sales order fact table at the order item line granularity."
@@ -58,8 +58,7 @@ models:
       - name: order_status
         description: "Current status of the order."
 
-      - name: sales_reason_name
-        description: "Aggregated sales reason names associated with the order."
+      # REMOVIDO: sales_reason_name (agora está na tabela bridge fct_order_reasons)
 
       - name: quantity
         description: "Quantity of items ordered."
@@ -84,6 +83,32 @@ models:
         description: "Net revenue for the item line (gross_total - discount_total)."
         tests:
           - not_null
+
+  # Tabela Bridge para lidar com a relação N:N entre Pedidos e Motivos de Venda
+  - name: fct_order_reasons
+    description: "Bridge fact table connecting sales orders to individual sales reasons (1 order can have multiple reasons)."
+    columns:
+      - name: order_reason_sk
+        description: "Primary surrogate key for each order and sales reason combination."
+        tests:
+          - unique
+          - not_null
+
+      - name: order_fk
+        description: "Foreign key referencing the sales order header."
+        tests:
+          - not_null
+
+      - name: reason_fk
+        description: "Foreign key referencing dim_reasons."
+        tests:
+          - not_null
+
+      - name: reason_name
+        description: "Name of the sales reason (e.g., Promotion, Marketing, On-site)."
+
+      - name: reason_type
+        description: "Category type of the sales reason."
 
   # ==========================================
   # DIMENSION TABLES
@@ -182,15 +207,3 @@ models:
 
       - name: card_type
         description: "Brand or provider type of the credit card."
-
-  - name: dim_reasons
-    description: "Sales reasons dimension aggregated at the order level."
-    columns:
-      - name: order_fk
-        description: "Primary order key linking to the sales reasons."
-        tests:
-          - unique
-          - not_null
-
-      - name: sales_reason_name
-        description: "Aggregated text string of reason names."

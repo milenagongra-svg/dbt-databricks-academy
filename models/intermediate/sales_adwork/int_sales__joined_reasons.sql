@@ -11,7 +11,9 @@ with
 
     , joined as (
         select
-            orders_reason.order_fk
+            {{ dbt_utils.generate_surrogate_key(['orders_reason.order_fk', 'sales_reason.sales_reason_pk']) }} as order_reason_sk
+            , orders_reason.order_fk
+            , sales_reason.sales_reason_pk as reason_fk
             , sales_reason.reason_name
             , sales_reason.reason_type
         from orders_reason
@@ -19,13 +21,5 @@ with
             on orders_reason.sales_reason_fk = sales_reason.sales_reason_pk
     )
 
-    , aggregated as (
-        select
-            order_fk
-            , coalesce(array_join(collect_set(reason_name), ', '), 'Not Informed') as sales_reason_name
-        from joined
-        group by order_fk
-    )
-
 select *
-from aggregated
+from joined
