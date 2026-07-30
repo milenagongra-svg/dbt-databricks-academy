@@ -14,13 +14,12 @@ with
             , product_fk
             , order_date
             , order_status
-            , sales_reason_name
             , quantity
             , unit_price
             , discount_pct
-            , gross_amount as gross_total
-            , discount_amount as discount_total
-            , net_amount as net_total
+            , gross_total
+            , discount_total
+            , net_total
         from int_sales
     )
 
