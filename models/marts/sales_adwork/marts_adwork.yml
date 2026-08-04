@@ -58,8 +58,6 @@ models:
       - name: order_status
         description: "Current status of the order."
 
-      # REMOVIDO: sales_reason_name (agora está na tabela bridge fct_order_reasons)
-
       - name: quantity
         description: "Quantity of items ordered."
         tests:
@@ -84,6 +82,15 @@ models:
         tests:
           - not_null
 
+      # --- NOVAS COLUNAS DE RATEIO DE FRETE E IMPOSTOS ---
+      - name: freight_allocated
+        description: "Proportionally allocated freight cost for the order item line."
+        tests:
+          - not_null
+
+      - name: tax_allocated
+        description: "Proportionally allocated tax amount for the order item line."
+
   # Tabela Bridge para lidar com a relação N:N entre Pedidos e Motivos de Venda
   - name: fct_order_reasons
     description: "Bridge fact table connecting sales orders to individual sales reasons (1 order can have multiple reasons)."
@@ -100,7 +107,7 @@ models:
           - not_null
 
       - name: reason_fk
-        description: "Foreign key referencing dim_reasons."
+        description: "Foreign key referencing sales reasons catalog."
         tests:
           - not_null
 

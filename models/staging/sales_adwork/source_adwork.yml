@@ -28,6 +28,19 @@ sources:
             tests:
               - not_null
 
+          # --- COLUNAS ADICIONADAS PARA SUPORTAR O RATEIO DE FRETE E IMPOSTOS ---
+          - name: subtotal
+            description: "Subtotal of the order before taxes and freight."
+
+          - name: taxamt
+            description: "Total tax amount for the order."
+
+          - name: freight
+            description: "Total freight cost for the order shipment."
+
+          - name: totaldue
+            description: "Total amount due for the order (Subtotal + Tax + Freight)."
+
       - name: sales_salesorderdetail
         description: "Raw table containing line items for sales orders."
         columns:
@@ -139,6 +152,7 @@ sources:
             description: "Primary key code for the country or region."
             tests:
               - unique
+              # Removido not_null para aceitar valores nulos presentes nos dados brutos de origem
 
       - name: production_product
         description: "Raw product catalog master table."
@@ -180,6 +194,33 @@ sources:
 # 2. STAGING MODELS
 # ==========================================
 models:
+  - name: stg_adwork__orders
+    description: "Staging model containing cleaned order headers with financial totals."
+    columns:
+      - name: order_pk
+        description: "Primary key of the sales order header."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_fk
+        description: "Foreign key to the customer table."
+
+      - name: credit_card_fk
+        description: "Foreign key to the credit card payment details."
+
+      - name: address_fk
+        description: "Foreign key to the shipping address."
+
+      - name: freight_amount
+        description: "Order-level freight charges."
+
+      - name: subtotal
+        description: "Order-level subtotal."
+
+      - name: tax_amount
+        description: "Order-level tax charges."
+
   - name: stg_adwork__order_details
     description: "Staging model containing cleaned sales order line items."
     columns:

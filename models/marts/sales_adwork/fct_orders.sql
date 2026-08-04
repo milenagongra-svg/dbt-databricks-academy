@@ -20,6 +20,8 @@ with
             , gross_total
             , discount_total
             , net_total
+            , freight_allocated
+            , tax_allocated
         from int_sales
     )
 
