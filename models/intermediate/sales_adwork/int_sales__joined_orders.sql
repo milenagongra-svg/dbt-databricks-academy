@@ -29,7 +29,7 @@ with
                     else 'Unknown'
                 end as string
             ) as order_status
-           
+            
             , order_details.quantity
             , order_details.unit_price
             , order_details.discount_pct
@@ -40,6 +40,17 @@ with
             , (
                 (order_details.quantity * order_details.unit_price) * (1 - order_details.discount_pct)
             ) as net_total
+
+            , (
+                ( (order_details.quantity * order_details.unit_price) * (1 - order_details.discount_pct) ) 
+                / nullif(orders.subtotal, 0)
+            ) * orders.freight_amount as freight_allocated
+
+            , (
+                ( (order_details.quantity * order_details.unit_price) * (1 - order_details.discount_pct) ) 
+                / nullif(orders.subtotal, 0)
+            ) * orders.tax_amount as tax_allocated
+
         from orders
         inner join order_details
             on orders.order_pk = order_details.order_fk
