@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: dim_territories
+    description: "Geographic dimension containing shipping locations (City, State, and Country)."
+    columns:
+      - name: address_sk
+        description: "Primary surrogate key for the territory dimension."
+        tests:
+          - unique
+          - not_null
+
+      - name: address_line
+        description: "Street address line."
+
+      - name: city_name
+        description: "Name of the city."
+
+      - name: state_code
+        description: "State or province code."
+
+      - name: state_name
+        description: "State or province name."
+
+      - name: country_code
+        description: "Country or region code."
+
+      - name: country_name
+        description: "Country or region name."

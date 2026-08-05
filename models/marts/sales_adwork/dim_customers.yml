@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension containing registration details for both Individual and Corporate clients."
+    columns:
+      - name: customer_sk
+        description: "Primary surrogate key for the customer dimension."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_name
+        description: "Full name or store name of the customer."
+
+      - name: customer_type
+        description: "Category type of the registered customer."
+        tests:
+          - accepted_values:
+              values:
+                - 'Individual'
+                - 'Corporate Store'
+                - 'Corporate Store (with Contact)'
+                - 'Not Informed'
+                - 'Not Applicable'
+
+      - name: territory_fk
+        description: "Foreign key referencing the primary territory/region."

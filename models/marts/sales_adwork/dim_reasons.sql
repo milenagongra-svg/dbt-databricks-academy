@@ -5,11 +5,15 @@ with
     )
 
     , dimensions as (
-        select distinct
+        select
             reason_fk as reason_sk
             , reason_name
             , reason_type
         from int_reasons
+        group by 
+            reason_fk
+            , reason_name
+            , reason_type
     )
 
 select *
