@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Consolidated sales order fact table at the order item line granularity."
+    columns:
+      - name: order_item_sk
+        description: "Primary surrogate key identifying each unique order item line."
+        tests:
+          - unique
+          - not_null
+
+      - name: order_pk
+        description: "Business key for the sales order header."
+        tests:
+          - not_null
+
+      - name: customer_fk
+        description: "Foreign key referencing dim_customers."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_sk
+
+      - name: credit_card_fk
+        description: "Foreign key referencing dim_credit_cards."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_credit_cards')
+              field: credit_card_sk
+
+      - name: address_fk
+        description: "Foreign key referencing dim_territories."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_territories')
+              field: address_sk
+
+      - name: product_fk
+        description: "Foreign key referencing dim_products."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_sk
+
+      - name: order_date
+        description: "Date when the order was placed."
+        tests:
+          - not_null
+
+      - name: order_status
+        description: "Current status of the order."
+
+      - name: quantity
+        description: "Quantity of items ordered."
+        tests:
+          - not_null
+
+      - name: unit_price
+        description: "Unit price of the product."
+        tests:
+          - not_null
+
+      - name: discount_pct
+        description: "Discount percentage applied to the item."
+
+      - name: gross_total
+        description: "Gross total revenue (quantity * unit_price)."
+
+      - name: discount_total
+        description: "Total discount amount applied."
+
+      - name: net_total
+        description: "Net revenue for the item line (gross_total - discount_total)."
+        tests:
+          - not_null
+
+      - name: freight_allocated
+        description: "Proportionally allocated freight cost for the order item line."
+        tests:
+          - not_null
+
+      - name: tax_allocated
+        description: "Proportionally allocated tax amount for the order item line."

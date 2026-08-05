@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: dim_reasons
+    description: "Sales reason dimension containing descriptive sales motives and classification types."
+    columns:
+      - name: reason_sk
+        description: "Primary surrogate key for the sales reason dimension."
+        tests:
+          - unique
+          - not_null
+
+      - name: reason_name
+        description: "Name of the sales reason (e.g., Promotion, Marketing, On-site)."
+
+      - name: reason_type
+        description: "Category type of the sales reason."

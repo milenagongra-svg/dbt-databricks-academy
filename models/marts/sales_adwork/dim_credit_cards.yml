@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: dim_credit_cards
+    description: "Credit card dimension containing payment card types."
+    columns:
+      - name: credit_card_sk
+        description: "Primary surrogate key for the credit card dimension."
+        tests:
+          - unique
+          - not_null
+
+      - name: card_type
+        description: "Brand or provider type of the credit card."

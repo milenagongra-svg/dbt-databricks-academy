@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: "Product dimension containing Category, Subcategory, and Model hierarchies."
+    columns:
+      - name: product_sk
+        description: "Primary surrogate key for the product dimension."
+        tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: "Name of the product."
+
+      - name: product_number
+        description: "Internal product tracking code."
+
+      - name: subcategory_name
+        description: "Subcategory name of the product."
+
+      - name: category_name
+        description: "Top-level category name of the product."
+
+      - name: model_name
+        description: "Model name of the product."
+
+      - name: standard_cost
+        description: "Standard production cost of the product."
+
+      - name: list_price
+        description: "Standard listing price of the product."
