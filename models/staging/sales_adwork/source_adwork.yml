@@ -28,7 +28,6 @@ sources:
             tests:
               - not_null
 
-          # --- COLUNAS ADICIONADAS PARA SUPORTAR O RATEIO DE FRETE E IMPOSTOS ---
           - name: subtotal
             description: "Subtotal of the order before taxes and freight."
 
@@ -152,7 +151,6 @@ sources:
             description: "Primary key code for the country or region."
             tests:
               - unique
-              # Removido not_null para aceitar valores nulos presentes nos dados brutos de origem
 
       - name: production_product
         description: "Raw product catalog master table."
