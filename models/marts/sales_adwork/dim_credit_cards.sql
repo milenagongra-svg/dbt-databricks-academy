@@ -6,7 +6,7 @@ with
 
     , dimensions as (
         select
-            credit_card_sk
+            credit_card_pk
             , card_type
         from int_credit_cards
     )

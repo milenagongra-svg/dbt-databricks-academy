@@ -4,8 +4,8 @@ models:
   - name: dim_customers
     description: "Customer dimension containing registration details for both Individual and Corporate clients."
     columns:
-      - name: customer_sk
-        description: "Primary surrogate key for the customer dimension."
+      - name: customer_pk
+        description: "Primary key for the customer dimension."
         tests:
           - unique
           - not_null

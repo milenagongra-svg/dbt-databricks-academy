@@ -5,7 +5,7 @@ with
     )
 
 select
-    order_reason_sk
+    order_reason_pk
     , order_fk
     , reason_fk
 from int_reasons

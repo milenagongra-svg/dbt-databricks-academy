@@ -21,7 +21,7 @@ models:
           - not_null
           - relationships:
               to: ref('dim_customers')
-              field: customer_sk
+              field: customer_pk
 
       - name: credit_card_fk
         description: "Foreign key referencing dim_credit_cards."
@@ -29,7 +29,7 @@ models:
           - not_null
           - relationships:
               to: ref('dim_credit_cards')
-              field: credit_card_sk
+              field: credit_card_pk
 
       - name: address_fk
         description: "Foreign key referencing dim_territories."
@@ -37,7 +37,7 @@ models:
           - not_null
           - relationships:
               to: ref('dim_territories')
-              field: address_sk
+              field: address_pk
 
       - name: product_fk
         description: "Foreign key referencing dim_products."
@@ -45,7 +45,7 @@ models:
           - not_null
           - relationships:
               to: ref('dim_products')
-              field: product_sk
+              field: product_pk
 
       - name: order_date
         description: "Date when the order was placed."

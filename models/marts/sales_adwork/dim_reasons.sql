@@ -1,20 +1,24 @@
 with
-    int_reasons as (
+    stg_sales_reasons as (
         select *
-        from {{ ref('int_sales__joined_reasons') }}
+        from {{ ref('stg_adwork__sales_reasons') }}
     )
 
     , dimensions as (
         select
-            reason_fk as reason_sk
+            sales_reason_pk as reason_pk
             , reason_name
             , reason_type
-        from int_reasons
-        group by 
-            reason_fk
+        from stg_sales_reasons
+    )
+
+    , final as (
+        select
+            reason_pk
             , reason_name
             , reason_type
+        from dimensions
     )
 
 select *
-from dimensions
+from final

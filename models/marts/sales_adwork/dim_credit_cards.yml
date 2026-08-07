@@ -4,8 +4,8 @@ models:
   - name: dim_credit_cards
     description: "Credit card dimension containing payment card types."
     columns:
-      - name: credit_card_sk
-        description: "Primary surrogate key for the credit card dimension."
+      - name: credit_card_pk
+        description: "Primary key for the credit card dimension."
         tests:
           - unique
           - not_null

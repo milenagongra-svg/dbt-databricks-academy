@@ -6,14 +6,14 @@ with
 
     , transformed as (
         select
-            credit_card_pk as credit_card_sk
+            credit_card_pk as credit_card_pk
             , coalesce(trim(card_type), 'Not Informed') as card_type
         from staging
     )
 
     , unmapped as (
         select
-            -1 as credit_card_sk
+            -1 as credit_card_pk
             , 'Not Informed / No Card' as card_type
     )
 

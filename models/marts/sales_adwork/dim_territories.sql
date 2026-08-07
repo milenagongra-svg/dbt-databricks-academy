@@ -6,7 +6,7 @@ with
 
     , dimensions as (
         select
-            address_sk
+            address_pk
             , address_line
             , city_name
             , state_code

@@ -21,7 +21,7 @@ with
 
     , joined as (
         select
-            products.product_pk as product_sk
+            products.product_pk as product_pk
             , products.product_name
             , products.product_number
             , coalesce(subcategories.subcategory_name, 'Not Informed') as subcategory_name
@@ -40,7 +40,7 @@ with
 
     , unmapped as (
         select
-            -1 as product_sk
+            -1 as product_pk
             , 'Not Informed Product' as product_name
             , 'NA' as product_number
             , 'Not Informed' as subcategory_name

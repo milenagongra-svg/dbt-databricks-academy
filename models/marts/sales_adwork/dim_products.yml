@@ -4,8 +4,8 @@ models:
   - name: dim_products
     description: "Product dimension containing Category, Subcategory, and Model hierarchies."
     columns:
-      - name: product_sk
-        description: "Primary surrogate key for the product dimension."
+      - name: product_pk
+        description: "Primary key for the product dimension."
         tests:
           - unique
           - not_null
