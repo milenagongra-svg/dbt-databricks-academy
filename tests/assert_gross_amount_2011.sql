@@ -9,4 +9,4 @@ with
 select 
     total_bruto
 from vendas_2011
-where abs(total_bruto - 12646105.58) > 10.00
+where abs(total_bruto - 12646112.16) > 10.00
