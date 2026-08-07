@@ -4,7 +4,7 @@ models:
   - name: bridge_order_reasons
     description: "Bridge table connecting sales order headers to individual sales reasons (1 order can have multiple reasons)."
     columns:
-      - name: order_reason_sk
+      - name: order_reason_pk
         description: "Primary surrogate key for each order and sales reason combination."
         tests:
           - unique
@@ -21,4 +21,4 @@ models:
           - not_null
           - relationships:
               to: ref('dim_reasons')
-              field: reason_sk
+              field: reason_pk

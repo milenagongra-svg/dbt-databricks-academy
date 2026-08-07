@@ -16,7 +16,7 @@ with
 
     , joined as (
         select
-            addresses.address_pk as address_sk
+            addresses.address_pk as address_pk
             , coalesce(addresses.address_line, 'Not Informed') as address_line
             , coalesce(addresses.city_name, 'Not Informed') as city_name
             , coalesce(states.state_code, 'NA') as state_code
@@ -32,7 +32,7 @@ with
 
     , unmapped as (
         select
-            -1 as address_sk
+            -1 as address_pk
             , 'Not Informed' as address_line
             , 'Not Informed' as city_name
             , 'NA' as state_code

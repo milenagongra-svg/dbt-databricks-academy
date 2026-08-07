@@ -6,7 +6,7 @@ with
 
     , dimensions as (
         select
-            product_sk
+            product_pk
             , product_name
             , product_number
             , subcategory_name

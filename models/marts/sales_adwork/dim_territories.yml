@@ -4,8 +4,8 @@ models:
   - name: dim_territories
     description: "Geographic dimension containing shipping locations (City, State, and Country)."
     columns:
-      - name: address_sk
-        description: "Primary surrogate key for the territory dimension."
+      - name: address_pk
+        description: "Primary key for the territory dimension."
         tests:
           - unique
           - not_null

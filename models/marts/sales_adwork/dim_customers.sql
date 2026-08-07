@@ -6,7 +6,7 @@ with
 
     , dimensions as (
         select
-            customer_sk
+            customer_pk
             , customer_name
             , customer_type
             , territory_fk

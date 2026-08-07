@@ -16,7 +16,7 @@ with
 
     , joined_customers as (
         select
-            customers.customer_pk as customer_sk
+            customers.customer_pk as customer_pk
             , customers.person_fk
             , customers.store_fk
             , customers.territory_fk
@@ -42,7 +42,7 @@ with
 
     , unmapped as (
         select
-            -1 as customer_sk
+            -1 as customer_pk
             , -1 as person_fk
             , -1 as store_fk
             , -1 as territory_fk
