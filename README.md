@@ -1,5 +1,3 @@
-Here is the executive summary in English, ready to paste directly into your GitHub README.md:
-
 📌 Executive Summary
 End-to-end data architecture and modeling solution developed for Adventure Works, transforming raw transactional data into a production-ready Business Intelligence environment using dbt and Power BI.
 
